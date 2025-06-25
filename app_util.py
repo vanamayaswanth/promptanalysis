@@ -106,135 +106,44 @@ def get_analysis_prompt(query, style="comprehensive"):
         return _get_comprehensive_analysis_prompt(query)
 
 def _get_comprehensive_analysis_prompt(query):
-    """Comprehensive analysis - enhanced with advanced prompt engineering principles"""
-    return f"""# ASSIGNED ROLE: Expert Prompt Engineer & AI System Designer
+    """Comprehensive analysis - simplified for better API reliability"""
+    return f"""You are an expert prompt engineer. Analyze this prompt and provide a comprehensive evaluation with an enhanced version.
 
-You are a world-class prompt engineering specialist with expertise in:
-- Advanced prompt architecture and optimization
-- Chain-of-Thought (CoT) and Few-shot prompting techniques
-- System prompt design and AI persona development
-- Cognitive load theory and human-AI interaction patterns
-- Multi-step reasoning and self-consistency methods
-- Iterative refinement and adaptive prompt structures
+PROMPT TO ANALYZE: "{query}"
 
-# TASK OBJECTIVE: 
-Analyze the given prompt using proven prompt engineering patterns and generate a comprehensive, professionally enhanced version that maximizes clarity, effectiveness, and output quality.
+Evaluate the prompt on these criteria (1-100 total points):
+- Clarity & Precision (25 points): How clear and specific are the instructions?
+- Context & Background (20 points): Does it provide sufficient context and background?
+- Structure & Organization (20 points): Is it well-organized with clear structure?
+- Role & Persona (15 points): Does it define a clear role or persona?
+- Constraints & Guidelines (10 points): Are there clear constraints and guidelines?
+- Advanced Techniques (10 points): Does it use advanced prompting techniques?
 
-# INPUT PROMPT TO ANALYZE:
-```
-{query}
-```
+Create an enhanced version that:
+1. Defines a clear expert role
+2. Provides specific, detailed instructions
+3. Includes context and background
+4. Has clear structure and formatting
+5. Specifies desired output format
+6. Includes relevant constraints
 
-# STRUCTURED ANALYSIS PROCESS:
-
-## STEP 1: EVALUATION FRAMEWORK (100 points total)
-Apply advanced Chain-of-Thought reasoning for each criterion:
-
-**CLARITY & PRECISION (25 points)**
-- Unambiguous instructions with clear delimiters
-- SMART criteria implementation (Specific, Measurable, Achievable, Relevant, Time-bound)
-- Elimination of vague qualifiers and subjective terms
-- Explicit success metrics and validation criteria
-
-**CONTEXT & BACKGROUND (20 points)**
-- Domain expertise and background knowledge activation
-- Target audience and use case specification
-- Relevant constraints and environmental factors
-- Reference examples and contextual anchors
-
-**STRUCTURE & ORGANIZATION (20 points)**
-- Hierarchical information architecture
-- Strategic use of formatting (sections, bullets, numbering)
-- Logical flow with clear transitions
-- Input/output format specifications with examples
-
-**ROLE & PERSONA DEFINITION (15 points)**
-- Specific expert persona assignment
-- Behavioral guidelines and communication tone
-- Knowledge domain activation
-- Appropriate expertise level calibration
-
-**CONSTRAINTS & GUARDRAILS (10 points)**
-- Output specifications (length, format, style)
-- Scope boundaries and limitation definitions
-- Quality control and validation requirements
-- Edge case handling instructions
-
-**ADVANCED TECHNIQUES (10 points)**
-- Chain-of-Thought reasoning integration
-- Few-shot learning examples when beneficial
-- Self-reflection and meta-cognitive prompts
-- Multi-step reasoning and iterative refinement
-
-## STEP 2: ENHANCED PROMPT GENERATION
-
-### STRUCTURAL TEMPLATE IMPLEMENTATION:
-Apply this proven pattern for maximum effectiveness:
-
-```
-# ASSIGNED ROLE: [Specific expert persona with clear expertise areas]
-
-# TASK OBJECTIVE: [Clear, measurable goal with success criteria]
-
-# CONTEXT: [Domain background, audience, use case, constraints]
-
-# STRUCTURED SECTIONS:
-1. [Primary task breakdown]
-2. [Secondary considerations]
-3. [Quality assurance steps]
-
-# FORMATTING GUIDELINES:
-- [Specific output structure requirements]
-- [Style and tone specifications]
-- [Length and detail parameters]
-
-# TONE AND STYLE: [Communication approach and persona consistency]
-
-# FLEXIBILITY NOTES: [Adaptation and reuse considerations]
-```
-
-### BEST PRACTICES INTEGRATION:
-- **Delimiters**: Use triple quotes, sections, and clear separators
-- **Examples**: Include few-shot demonstrations for complex formats
-- **Iterative Design**: Enable prompt refinement and adaptation
-- **Pattern Recognition**: Incorporate proven prompt engineering templates
-- **Advanced Methods**: Apply CoT, self-consistency, and multi-step reasoning
-
-# OUTPUT FORMAT:
-You MUST respond with ONLY this exact JSON structure. No additional text:
-
+RESPOND WITH ONLY THIS JSON FORMAT:
 {{
-    "score": [sum of all individual scores below],
-    "clarity_score": [integer from 1-25], 
-    "context_score": [integer from 1-20],
-    "structure_score": [integer from 1-20],
-    "role_score": [integer from 1-15],
-    "constraints_score": [integer from 1-10],
-    "advanced_score": [integer from 1-10],
-    "strengths": ["strength 1", "strength 2", "strength 3"],
-    "weaknesses": ["weakness 1", "weakness 2", "weakness 3"],
-    "improvements": ["improvement 1", "improvement 2", "improvement 3"],
-    "new_prompt": "[MUST be completely rewritten using advanced prompt engineering principles - NOT the original]",
-    "reasoning": "Brief explanation of scoring rationale and key enhancements applied"
+    "score": [total score from 1-100],
+    "clarity_score": [1-25],
+    "context_score": [1-20], 
+    "structure_score": [1-20],
+    "role_score": [1-15],
+    "constraints_score": [1-10],
+    "advanced_score": [1-10],
+    "strengths": ["strength1", "strength2", "strength3"],
+    "weaknesses": ["weakness1", "weakness2", "weakness3"],
+    "improvements": ["improvement1", "improvement2", "improvement3"],
+    "new_prompt": "Complete enhanced version of the prompt with professional structure and specific instructions",
+    "reasoning": "Brief explanation of the analysis and enhancements made"
 }}
 
-# CRITICAL REQUIREMENTS:
-- Apply Chain-of-Thought reasoning throughout analysis
-- Verify mathematical accuracy: total = sum of individual scores
-- Enhanced prompt must demonstrate significant structural improvement
-- Incorporate multiple prompt engineering best practices
-- Transform basic requests into professional, comprehensive system prompts
-- Ensure adaptability and reuse potential in the enhanced version
-
-# ENHANCEMENT BENCHMARK:
-Transform simple prompts like "write about X" into comprehensive system prompts with:
-- Clear role assignment and expertise activation
-- Structured task breakdown with measurable objectives  
-- Specific formatting and style guidelines
-- Context-appropriate constraints and quality measures
-- Integration of advanced prompting techniques where beneficial
-
-The enhanced prompt should be 5-10x more detailed and professionally structured than the original."""
+Make sure the total score equals the sum of individual scores. The enhanced prompt should be significantly more detailed and professional than the original."""
 
 def prompt_analysis(query, api_key, temp, max_token, provider="groq", model=None, style="comprehensive"):
     """Main prompt analysis function supporting multiple AI providers"""
@@ -311,9 +220,14 @@ def _analyze_with_groq(query, api_key, temp, max_token, model, style):
             stop=None,
         )
         
-        return _parse_response(completion.choices[0].message.content, query)
+        # Debug: Print the actual response
+        response_content = completion.choices[0].message.content
+        print(f"DEBUG: Groq API Response: {response_content[:500]}...")  # Print first 500 chars
+        
+        return _parse_response(response_content, query)
     
     except Exception as e:
+        print(f"DEBUG: Groq API Error: {str(e)}")  # Debug error
         return "Error", f"Groq API error: {str(e)}"
 
 def _analyze_with_openai(query, api_key, temp, max_token, model, style):
@@ -465,10 +379,14 @@ def _analyze_with_openrouter(query, api_key, temp, max_token, model, style):
 def _parse_response(response_content, original_query):
     """Parse the AI response and extract analysis data"""
     try:
+        print(f"DEBUG: Parsing response, length: {len(response_content)}")
+        print(f"DEBUG: Response content (first 200 chars): {response_content[:200]}")
+        
         # Clean up the response to extract JSON
         json_match = re.search(r'\{.*\}', response_content, re.DOTALL)
         if json_match:
             json_str = json_match.group(0)
+            print(f"DEBUG: Found JSON, length: {len(json_str)}")
             parsed_response = json.loads(json_str)
             
             # Extract comprehensive analysis data with validation
@@ -510,6 +428,7 @@ def _parse_response(response_content, original_query):
             return result["overall_score"], result
         else:
             # Fallback if JSON parsing fails
+            print("DEBUG: No JSON found in response, using fallback")
             fallback_result = {
                 "overall_score": 25,
                 "detailed_scores": {"clarity": 8, "context": 4, "structure": 5, "role": 3, "constraints": 3, "advanced": 2},
@@ -521,8 +440,9 @@ def _parse_response(response_content, original_query):
             }
             return 25, fallback_result
             
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
         # If parsing fails, try to extract score and prompt manually
+        print(f"DEBUG: JSON decode error: {str(e)}")
         score_match = re.search(r'"score":\s*(\d+)', response_content)
         prompt_match = re.search(r'"new_prompt":\s*"([^"]*)"', response_content)
         
