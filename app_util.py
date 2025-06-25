@@ -106,105 +106,102 @@ def get_analysis_prompt(query, style="comprehensive"):
         return _get_comprehensive_analysis_prompt(query)
 
 def _get_comprehensive_analysis_prompt(query):
-    """Comprehensive analysis - balanced approach"""
-    return f"""# ROLE: Expert Prompt Engineer & AI Interaction Specialist
+    """Comprehensive analysis - enhanced with advanced prompt engineering principles"""
+    return f"""# ASSIGNED ROLE: Expert Prompt Engineer & AI System Designer
 
-You are a world-class prompt engineering expert with deep knowledge of:
-- Large Language Model behavior and optimization
-- Chain-of-thought reasoning techniques  
-- Few-shot learning and in-context learning
-- Cognitive load theory in AI interactions
-- Advanced prompting strategies (CoT, ReAct, Tree of Thoughts)
+You are a world-class prompt engineering specialist with expertise in:
+- Advanced prompt architecture and optimization
+- Chain-of-Thought (CoT) and Few-shot prompting techniques
+- System prompt design and AI persona development
+- Cognitive load theory and human-AI interaction patterns
+- Multi-step reasoning and self-consistency methods
+- Iterative refinement and adaptive prompt structures
 
-# TASK: Comprehensive Prompt Analysis & Enhancement
+# TASK OBJECTIVE: 
+Analyze the given prompt using proven prompt engineering patterns and generate a comprehensive, professionally enhanced version that maximizes clarity, effectiveness, and output quality.
 
-## INPUT PROMPT TO ANALYZE:
+# INPUT PROMPT TO ANALYZE:
 ```
 {query}
 ```
 
-## ANALYSIS PROCESS:
-Think step-by-step through each evaluation criterion, then provide your assessment.
+# STRUCTURED ANALYSIS PROCESS:
 
-### EVALUATION FRAMEWORK (Total: 100 points)
+## STEP 1: EVALUATION FRAMEWORK (100 points total)
+Apply advanced Chain-of-Thought reasoning for each criterion:
 
-**1. CLARITY & PRECISION (25 points)**
-- Language clarity and unambiguous instructions
-- Specific, measurable, achievable, relevant, time-bound (SMART) criteria
-- Absence of vague terms ("good", "better", "creative")
-- Clear success metrics defined
+**CLARITY & PRECISION (25 points)**
+- Unambiguous instructions with clear delimiters
+- SMART criteria implementation (Specific, Measurable, Achievable, Relevant, Time-bound)
+- Elimination of vague qualifiers and subjective terms
+- Explicit success metrics and validation criteria
 
-**2. CONTEXT & BACKGROUND (20 points)**  
-- Sufficient domain context provided
-- Target audience clearly defined
-- Use case and constraints specified
-- Relevant examples or references included
+**CONTEXT & BACKGROUND (20 points)**
+- Domain expertise and background knowledge activation
+- Target audience and use case specification
+- Relevant constraints and environmental factors
+- Reference examples and contextual anchors
 
-**3. STRUCTURE & ORGANIZATION (20 points)**
-- Logical flow and hierarchy
-- Proper use of formatting (bullets, numbers, sections)
-- Step-by-step instructions when needed
-- Clear input/output format specifications
+**STRUCTURE & ORGANIZATION (20 points)**
+- Hierarchical information architecture
+- Strategic use of formatting (sections, bullets, numbering)
+- Logical flow with clear transitions
+- Input/output format specifications with examples
 
-**4. ROLE & PERSONA DEFINITION (15 points)**
-- Clear role assignment for the AI
-- Appropriate expertise level specified
-- Behavioral guidelines and tone definition
-- Relevant background knowledge activation
+**ROLE & PERSONA DEFINITION (15 points)**
+- Specific expert persona assignment
+- Behavioral guidelines and communication tone
+- Knowledge domain activation
+- Appropriate expertise level calibration
 
-**5. CONSTRAINTS & GUARDRAILS (10 points)**
-- Output length and format requirements
-- Ethical and safety boundaries
-- Scope limitations clearly defined
+**CONSTRAINTS & GUARDRAILS (10 points)**
+- Output specifications (length, format, style)
+- Scope boundaries and limitation definitions
+- Quality control and validation requirements
 - Edge case handling instructions
 
-**6. ADVANCED TECHNIQUES (10 points)**
-- Use of chain-of-thought reasoning prompts
-- Few-shot examples when appropriate
-- Self-reflection and validation requests
-- Multi-step reasoning instructions
+**ADVANCED TECHNIQUES (10 points)**
+- Chain-of-Thought reasoning integration
+- Few-shot learning examples when beneficial
+- Self-reflection and meta-cognitive prompts
+- Multi-step reasoning and iterative refinement
 
-## ENHANCED PROMPT CREATION GUIDELINES:
+## STEP 2: ENHANCED PROMPT GENERATION
 
-### STRUCTURE TEMPLATE:
+### STRUCTURAL TEMPLATE IMPLEMENTATION:
+Apply this proven pattern for maximum effectiveness:
+
 ```
-# ROLE: [Specific expert persona]
-You are [detailed role with expertise areas]
+# ASSIGNED ROLE: [Specific expert persona with clear expertise areas]
 
-# CONTEXT: [Situation/Background]
-[Domain context, audience, use case]
+# TASK OBJECTIVE: [Clear, measurable goal with success criteria]
 
-# TASK: [Clear objective]
-[Specific, measurable goal]
+# CONTEXT: [Domain background, audience, use case, constraints]
 
-# INSTRUCTIONS: [Step-by-step process]
-1. [First action with details]
-2. [Second action with details]
-...
+# STRUCTURED SECTIONS:
+1. [Primary task breakdown]
+2. [Secondary considerations]
+3. [Quality assurance steps]
 
-# OUTPUT FORMAT: [Exact specifications]
-[Structure, length, style requirements]
+# FORMATTING GUIDELINES:
+- [Specific output structure requirements]
+- [Style and tone specifications]
+- [Length and detail parameters]
 
-# CONSTRAINTS: [Limitations and boundaries]
-- [Specific constraint 1]
-- [Specific constraint 2]
+# TONE AND STYLE: [Communication approach and persona consistency]
 
-# EXAMPLES: [If beneficial]
-[Relevant few-shot examples]
+# FLEXIBILITY NOTES: [Adaptation and reuse considerations]
 ```
 
-### ENHANCEMENT STRATEGIES:
-- **Specificity**: Replace vague terms with precise requirements
-- **Context**: Add relevant background and domain knowledge
-- **Structure**: Organize with clear hierarchy and formatting
-- **Examples**: Include few-shot demonstrations when helpful
-- **Constraints**: Define boundaries and limitations explicitly
-- **Validation**: Add self-checking and reasoning requirements
-- **Chain-of-Thought**: Encourage step-by-step reasoning
-- **Output Format**: Specify exact format, length, and style
+### BEST PRACTICES INTEGRATION:
+- **Delimiters**: Use triple quotes, sections, and clear separators
+- **Examples**: Include few-shot demonstrations for complex formats
+- **Iterative Design**: Enable prompt refinement and adaptation
+- **Pattern Recognition**: Incorporate proven prompt engineering templates
+- **Advanced Methods**: Apply CoT, self-consistency, and multi-step reasoning
 
-## REQUIRED OUTPUT FORMAT:
-You MUST respond with ONLY this exact JSON structure. Do NOT add any other text:
+# OUTPUT FORMAT:
+You MUST respond with ONLY this exact JSON structure. No additional text:
 
 {{
     "score": [sum of all individual scores below],
@@ -217,28 +214,27 @@ You MUST respond with ONLY this exact JSON structure. Do NOT add any other text:
     "strengths": ["strength 1", "strength 2", "strength 3"],
     "weaknesses": ["weakness 1", "weakness 2", "weakness 3"],
     "improvements": ["improvement 1", "improvement 2", "improvement 3"],
-    "new_prompt": "[MUST be completely rewritten and significantly enhanced - NOT the original prompt]",
-    "reasoning": "Brief explanation of the score and main improvements made"
+    "new_prompt": "[MUST be completely rewritten using advanced prompt engineering principles - NOT the original]",
+    "reasoning": "Brief explanation of scoring rationale and key enhancements applied"
 }}
 
-## SCORING VALIDATION:
-- TOTAL SCORE = clarity_score + context_score + structure_score + role_score + constraints_score + advanced_score
-- Each score must be within its specified range
-- Provide realistic scores - most prompts score 20-60 total
-- Very basic prompts (like "write about X") should score 15-30 total
+# CRITICAL REQUIREMENTS:
+- Apply Chain-of-Thought reasoning throughout analysis
+- Verify mathematical accuracy: total = sum of individual scores
+- Enhanced prompt must demonstrate significant structural improvement
+- Incorporate multiple prompt engineering best practices
+- Transform basic requests into professional, comprehensive system prompts
+- Ensure adaptability and reuse potential in the enhanced version
 
-## CRITICAL REQUIREMENTS:
-- Provide ONLY the JSON response, no additional text
-- Math must be correct: verify your scores add up
-- **ENHANCED PROMPT MUST BE COMPLETELY DIFFERENT** - never return the original prompt
-- Transform basic prompts into professional, detailed, structured prompts
-- Add specific context, roles, constraints, and examples
+# ENHANCEMENT BENCHMARK:
+Transform simple prompts like "write about X" into comprehensive system prompts with:
+- Clear role assignment and expertise activation
+- Structured task breakdown with measurable objectives  
+- Specific formatting and style guidelines
+- Context-appropriate constraints and quality measures
+- Integration of advanced prompting techniques where beneficial
 
-## EXAMPLE ENHANCEMENT:
-Original: "write a blog on virat"
-Enhanced: "You are a professional sports journalist writing for Cricket Weekly magazine. Create a 1200-word engaging blog post about Virat Kohli's cricket career for passionate cricket fans aged 18-45. Focus on his transformation from young talent to captain, including: his batting statistics evolution, leadership style, key memorable innings, challenges faced, and impact on Indian cricket culture. Use an inspiring but analytical tone, include 3-4 specific statistics, and structure with clear subheadings. End with insights about his legacy."
-
-The enhanced prompt should be 5-10x longer and more detailed than the original."""
+The enhanced prompt should be 5-10x more detailed and professionally structured than the original."""
 
 def prompt_analysis(query, api_key, temp, max_token, provider="groq", model=None, style="comprehensive"):
     """Main prompt analysis function supporting multiple AI providers"""
