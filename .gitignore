@@ -12,7 +12,7 @@ wheels/
 # Django
 # evrything with start . expect .gitignore and .env
 .*
-.marscode/
+.marscode
 
 !.gitignore
 local_settings.py
