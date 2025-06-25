@@ -1146,15 +1146,29 @@
                     })
                 });
 
+                // Check if response is JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    console.error('Non-JSON response received:', text);
+                    throw new Error('Server returned non-JSON response. Please check server configuration.');
+                }
+
                 const data = await response.json();
 
                 if (response.ok) {
                     displayResults(data);
                 } else {
+                    console.error('API Error:', data);
                     alert('Error: ' + (data.error || 'Analysis failed'));
                 }
             } catch (error) {
-                alert('Error: ' + error.message);
+                console.error('Request failed:', error);
+                if (error.message.includes('JSON')) {
+                    alert('Error: The server is not responding with valid JSON. This usually indicates a server configuration issue or the API endpoints are not working correctly.');
+                } else {
+                    alert('Error: ' + error.message);
+                }
             } finally {
                 button.innerHTML = originalText;
                 button.disabled = false;

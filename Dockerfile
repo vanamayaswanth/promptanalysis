@@ -7,7 +7,8 @@ ENV PYTHONUNBUFFERED=1 \
     UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
     FLASK_APP=main.py \
-    FLASK_ENV=production
+    FLASK_ENV=production \
+    PORT=5000
 
 # Set work directory
 WORKDIR /app

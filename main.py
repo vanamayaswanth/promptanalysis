@@ -10,6 +10,20 @@ app.config['SECRET_KEY'] = 'asdf#FGSgvasgf$5$WGT'
 # Enable CORS for all routes
 CORS(app)
 
+# Global error handlers for API routes
+@app.errorhandler(404)
+def not_found_error(error):
+    if request.path.startswith('/api/'):
+        return jsonify({'error': 'API endpoint not found'}), 404
+    # For non-API routes, serve the main page (SPA behavior)
+    return send_from_directory('.', 'index.html')
+
+@app.errorhandler(500)
+def internal_error(error):
+    if request.path.startswith('/api/'):
+        return jsonify({'error': 'Internal server error'}), 500
+    return send_from_directory('.', 'index.html')
+
 @app.route('/api/health')
 def health_check():
     return jsonify({"status": "healthy", "message": "Prompt Analysis API is running"})
@@ -226,8 +240,16 @@ def get_models(provider):
         return jsonify({'error': f'Failed to get models: {str(e)}'}), 500
 
 if __name__ == '__main__':
+    import os
+    
+    # Get environment variables
+    debug_mode = os.getenv('FLASK_ENV', 'production') == 'development'
+    port = int(os.getenv('PORT', 5000))
+    
     print("🚀 Starting AI Prompt Analyzer...")
-    print("📍 Access the application at: http://localhost:5000")
+    print(f"📍 Access the application at: http://localhost:{port}")
     print("🔧 Make sure you have your Groq API key ready!")
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    print(f"🔧 Running in {'development' if debug_mode else 'production'} mode")
+    
+    app.run(host='0.0.0.0', port=port, debug=debug_mode)
 
