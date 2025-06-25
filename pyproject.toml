@@ -1,0 +1,22 @@
+[project]
+name = "debugging-internal-error-in-github-project-with-groq-api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "blinker==1.9.0",
+    "click==8.2.1",
+    "flask==3.1.1",
+    "flask-cors==6.0.0",
+    "flask-sqlalchemy==3.1.1",
+    "itsdangerous==2.2.0",
+    "jinja2==3.1.6",
+    "langchain>=0.3.26",
+    "langchain-groq>=0.3.4",
+    "markupsafe==3.0.2",
+    "openai>=1.91.0",
+    "sqlalchemy==2.0.41",
+    "typing-extensions==4.14.0",
+    "werkzeug==3.1.3",
+]
