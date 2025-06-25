@@ -8,7 +8,13 @@ wheels/
 
 # Virtual environments
 .venv
-
+.vscode
+.vscode/settings.json
+.marscode/deviceinfo.json
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+.env
 # Django
 # evrything with start . expect .gitignore and .env
 .*
