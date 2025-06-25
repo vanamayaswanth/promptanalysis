@@ -16,6 +16,24 @@ wheels = [
 ]
 
 [[package]]
+name = "anthropic"
+version = "0.55.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "distro" },
+    { name = "httpx" },
+    { name = "jiter" },
+    { name = "pydantic" },
+    { name = "sniffio" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a4/19/e2e09bc7fc0c4562ae865b3e5d487931c254c517e1c739b0c8aef2cf3186/anthropic-0.55.0.tar.gz", hash = "sha256:61826efa1bda0e4c7dc6f6a0d82b7d99b3fda970cd048d40ef5fca08a5eabd33", size = 408192, upload-time = "2025-06-23T18:52:26.27Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b3/8f/ba982f539db40f49a610f61562e9b54fb9c85e7b9ede9a46ff6f9e79042f/anthropic-0.55.0-py3-none-any.whl", hash = "sha256:3518433fc0372a13f2b793b4cabecc7734ec9176e063a0f28dac19aa17c57f94", size = 289318, upload-time = "2025-06-23T18:52:24.478Z" },
+]
+
+[[package]]
 name = "anyio"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
@@ -166,17 +184,20 @@ name = "debugging-internal-error-in-github-project-with-groq-api"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "anthropic" },
     { name = "blinker" },
     { name = "click" },
     { name = "flask" },
     { name = "flask-cors" },
     { name = "flask-sqlalchemy" },
+    { name = "groq" },
     { name = "itsdangerous" },
     { name = "jinja2" },
     { name = "langchain" },
     { name = "langchain-groq" },
     { name = "markupsafe" },
     { name = "openai" },
+    { name = "requests" },
     { name = "sqlalchemy" },
     { name = "typing-extensions" },
     { name = "werkzeug" },
@@ -184,17 +205,20 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "anthropic", specifier = ">=0.25.0" },
     { name = "blinker", specifier = "==1.9.0" },
     { name = "click", specifier = "==8.2.1" },
     { name = "flask", specifier = "==3.1.1" },
     { name = "flask-cors", specifier = "==6.0.0" },
     { name = "flask-sqlalchemy", specifier = "==3.1.1" },
+    { name = "groq", specifier = ">=0.10.0" },
     { name = "itsdangerous", specifier = "==2.2.0" },
     { name = "jinja2", specifier = "==3.1.6" },
     { name = "langchain", specifier = ">=0.3.26" },
     { name = "langchain-groq", specifier = ">=0.3.4" },
     { name = "markupsafe", specifier = "==3.0.2" },
-    { name = "openai", specifier = ">=1.91.0" },
+    { name = "openai", specifier = ">=1.0.0" },
+    { name = "requests", specifier = ">=2.31.0" },
     { name = "sqlalchemy", specifier = "==2.0.41" },
     { name = "typing-extensions", specifier = "==4.14.0" },
     { name = "werkzeug", specifier = "==3.1.3" },

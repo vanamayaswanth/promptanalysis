@@ -87,12 +87,12 @@ Your prompts get evaluated across **6 critical dimensions**:
 
 | Metric | Weight | What It Measures |
 |--------|---------|------------------|
-| **🎯 Clarity** | 25% | How clear and understandable your instructions are |
-| **📋 Specificity** | 20% | Level of detail and precision in requirements |
-| **🌍 Context** | 20% | Adequacy of background information provided |
-| **🏗️ Structure** | 15% | Organization and logical flow of instructions |
-| **💡 Effectiveness** | 10% | Likelihood of achieving desired AI behavior |
-| **🎪 Engagement** | 10% | Use of constraints and explicit guidance cues |
+| **🎯 Clarity & Precision** | 25% | SMART criteria, unambiguous language, clear success metrics |
+| **🌍 Context & Background** | 20% | Domain context, target audience, use case specification |
+| **🏗️ Structure & Organization** | 20% | Logical flow, proper formatting, step-by-step instructions |
+| **👤 Role & Persona Definition** | 15% | AI expertise level, behavioral guidelines, background activation |
+| **🚧 Constraints & Guardrails** | 10% | Output requirements, boundaries, edge case handling |
+| **🚀 Advanced Techniques** | 10% | Chain-of-thought, few-shot examples, self-reflection prompts |
 
 ### 📈 Score Interpretation
 - **90-100**: 🌟 **Expert Level** - Publication-ready prompts

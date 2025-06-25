@@ -506,6 +506,17 @@
             border-color: var(--accent-primary);
         }
 
+        .score-card.primary {
+            background: linear-gradient(135deg, var(--accent-primary)20, var(--accent-secondary)20);
+            border: 2px solid var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        .score-card.primary .score-value {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+        }
+
         .score-value {
             font-size: 2rem;
             font-weight: 700;
@@ -787,11 +798,12 @@
                         <div class="form-group">
                             <label class="form-label">AI Provider</label>
                             <select class="form-select" id="provider">
+                                <option value="groq">Groq (Default)</option>
                                 <option value="openai">OpenAI</option>
-                                <option value="groq">Groq</option>
                                 <option value="anthropic">Anthropic</option>
                                 <option value="mistral">Mistral AI</option>
                                 <option value="together">Together AI</option>
+                                <option value="openrouter">OpenRouter</option>
                             </select>
                         </div>
 
@@ -807,15 +819,23 @@
                         <div class="form-group">
                             <label class="form-label">API Key</label>
                             <input type="password" class="form-input" id="apiKey" placeholder="Enter your API key">
+                            <div class="provider-info" id="providerInfo" style="margin-top: 8px; font-size: 0.9em; color: #666;">
+                                <strong>Groq:</strong> Get free API key at <a href="https://console.groq.com" target="_blank">console.groq.com</a> (Fastest)
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">Analysis Style</label>
                             <select class="form-select" id="style">
-                                <option value="comprehensive">Comprehensive</option>
-                                <option value="quick">Quick Analysis</option>
-                                <option value="detailed">Detailed</option>
+                                <option value="comprehensive">🎯 Comprehensive (Balanced)</option>
+                                <option value="quick">⚡ Quick Analysis (Fast)</option>
+                                <option value="detailed">🔬 Expert Deep Analysis (Thorough)</option>
                             </select>
+                            <div style="margin-top: 8px; font-size: 0.85em; color: #666; line-height: 1.4;">
+                                <strong>Quick:</strong> Fast feedback, 2-3 key improvements<br>
+                                <strong>Comprehensive:</strong> Complete analysis with best practices<br>
+                                <strong>Expert:</strong> Enterprise-grade analysis with advanced techniques
+                            </div>
                         </div>
                     </div>
 
@@ -844,17 +864,13 @@
                             </h4>
                             
                             <div class="score-grid">
-                                <div class="score-card">
+                                <div class="score-card primary">
                                     <div class="score-value" id="overallScore">--</div>
                                     <div class="score-label">Overall</div>
                                 </div>
                                 <div class="score-card">
                                     <div class="score-value" id="clarityScore">--</div>
                                     <div class="score-label">Clarity</div>
-                                </div>
-                                <div class="score-card">
-                                    <div class="score-value" id="specificityScore">--</div>
-                                    <div class="score-label">Specificity</div>
                                 </div>
                                 <div class="score-card">
                                     <div class="score-value" id="contextScore">--</div>
@@ -865,8 +881,16 @@
                                     <div class="score-label">Structure</div>
                                 </div>
                                 <div class="score-card">
-                                    <div class="score-value" id="effectivenessScore">--</div>
-                                    <div class="score-label">Effectiveness</div>
+                                    <div class="score-value" id="roleScore">--</div>
+                                    <div class="score-label">Role Definition</div>
+                                </div>
+                                <div class="score-card">
+                                    <div class="score-value" id="constraintsScore">--</div>
+                                    <div class="score-label">Constraints</div>
+                                </div>
+                                <div class="score-card">
+                                    <div class="score-value" id="advancedScore">--</div>
+                                    <div class="score-label">Advanced Techniques</div>
                                 </div>
                             </div>
 
@@ -886,9 +910,17 @@
                                 <div class="feedback-content" id="weaknesses">No analysis performed yet.</div>
                             </div>
 
+                            <div class="feedback-section">
+                                <div class="feedback-title">
+                                    <i class="fas fa-lightbulb"></i>
+                                    Specific Improvements
+                                </div>
+                                <div class="feedback-content" id="improvements">No analysis performed yet.</div>
+                            </div>
+
                             <div class="form-group">
-                                <label class="form-label">Improved Prompt</label>
-                                <textarea class="form-textarea" id="improvedPrompt" readonly placeholder="Improved version will appear here..."></textarea>
+                                <label class="form-label">Enhanced Prompt</label>
+                                <textarea class="form-textarea" id="improvedPrompt" readonly placeholder="AI-enhanced version will appear here..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -951,43 +983,128 @@
         }
 
         // Provider and Model Management
-        const modelsByProvider = {
-            openai: [
-                { value: 'gpt-4o', text: 'GPT-4o' },
-                { value: 'gpt-4o-mini', text: 'GPT-4o Mini' },
-                { value: 'gpt-3.5-turbo', text: 'GPT-3.5 Turbo' }
-            ],
-            groq: [
-                { value: 'llama-3.3-70b-versatile', text: 'Llama 3.3 70B Versatile' },
-                { value: 'llama-3.1-8b-instant', text: 'Llama 3.1 8B Instant' },
-                { value: 'gemma2-9b-it', text: 'Gemma2 9B IT' },
-                { value: 'deepseek-r1-distill-llama-70b', text: 'DeepSeek R1 Distill 70B' }
-            ],
-            anthropic: [
-                { value: 'claude-3-5-sonnet-20241022', text: 'Claude 3.5 Sonnet' },
-                { value: 'claude-3-haiku-20240307', text: 'Claude 3 Haiku' }
-            ],
-            mistral: [
-                { value: 'mistral-saba-24b', text: 'Mistral Saba 24B' }
-            ],
-            together: [
-                { value: 'meta-llama/Llama-3-70b-chat-hf', text: 'Llama 3 70B Chat' },
-                { value: 'meta-llama/Llama-3-8b-chat-hf', text: 'Llama 3 8B Chat' }
-            ]
-        };
+        let providersData = {};
 
-        function updateModels() {
+        async function loadProviders() {
+            try {
+                const response = await fetch('/api/providers');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Update provider dropdown
+                    const providerSelect = document.getElementById('provider');
+                    providerSelect.innerHTML = '';
+                    
+                    data.providers.forEach(provider => {
+                        providersData[provider.id] = provider;
+                        const option = document.createElement('option');
+                        option.value = provider.id;
+                        option.textContent = provider.name + (provider.id === 'groq' ? ' (Default)' : '');
+                        if (provider.id === 'groq') option.selected = true;
+                        providerSelect.appendChild(option);
+                    });
+                    
+                    // Load models for default provider
+                    updateModels();
+                } else {
+                    console.error('Failed to load providers:', data.error);
+                    // Fallback to default Groq option
+                    document.getElementById('provider').innerHTML = '<option value="groq">Groq (Default)</option>';
+                }
+            } catch (error) {
+                console.error('Error loading providers:', error);
+                // Fallback to default Groq option
+                document.getElementById('provider').innerHTML = '<option value="groq">Groq (Default)</option>';
+            }
+        }
+
+        async function updateModels() {
             const provider = document.getElementById('provider').value;
             const modelSelect = document.getElementById('model');
-            const models = modelsByProvider[provider];
             
-            modelSelect.innerHTML = '';
-            models.forEach(model => {
-                const option = document.createElement('option');
-                option.value = model.value;
-                option.textContent = model.text;
-                modelSelect.appendChild(option);
-            });
+            // Update provider info
+            updateProviderInfo(provider);
+            
+            // Show loading state
+            modelSelect.innerHTML = '<option>Loading models...</option>';
+            modelSelect.disabled = true;
+            
+            try {
+                // Use cached data if available
+                if (providersData[provider]) {
+                    const models = providersData[provider].models;
+                    const defaultModel = providersData[provider].default_model;
+                    
+                    modelSelect.innerHTML = '';
+                    models.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model;
+                        option.textContent = formatModelName(model);
+                        if (model === defaultModel) option.selected = true;
+                        modelSelect.appendChild(option);
+                    });
+                } else {
+                    // Fallback API call
+                    const response = await fetch(`/api/models/${provider}`);
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        modelSelect.innerHTML = '';
+                        data.models.forEach(model => {
+                            const option = document.createElement('option');
+                            option.value = model;
+                            option.textContent = formatModelName(model);
+                            if (model === data.default_model) option.selected = true;
+                            modelSelect.appendChild(option);
+                        });
+                    } else {
+                        modelSelect.innerHTML = '<option value="">Error loading models</option>';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading models:', error);
+                modelSelect.innerHTML = '<option value="">Error loading models</option>';
+            } finally {
+                modelSelect.disabled = false;
+            }
+        }
+
+        function formatModelName(model) {
+            // Convert technical model names to user-friendly names
+            const modelMap = {
+                'llama-3.3-70b-versatile': 'Llama 3.3 70B Versatile',
+                'llama-3.1-70b-versatile': 'Llama 3.1 70B Versatile',
+                'llama-3.1-8b-instant': 'Llama 3.1 8B Instant',
+                'gemma2-9b-it': 'Gemma2 9B IT',
+                'deepseek-r1-distill-llama-70b': 'DeepSeek R1 Distill 70B',
+                'gpt-4o': 'GPT-4o',
+                'gpt-4o-mini': 'GPT-4o Mini',
+                'gpt-4-turbo': 'GPT-4 Turbo',
+                'gpt-4': 'GPT-4',
+                'gpt-3.5-turbo': 'GPT-3.5 Turbo',
+                'claude-3-5-sonnet-20241022': 'Claude 3.5 Sonnet',
+                'claude-3-5-haiku-20241022': 'Claude 3.5 Haiku',
+                'claude-3-opus-20240229': 'Claude 3 Opus',
+                'mistral-large-latest': 'Mistral Large',
+                'mistral-small-latest': 'Mistral Small',
+                'open-mixtral-8x22b': 'Mixtral 8x22B'
+            };
+            
+            return modelMap[model] || model.split('/').pop().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        function updateProviderInfo(provider) {
+            const providerInfoElement = document.getElementById('providerInfo');
+            const providerInfoMap = {
+                'groq': '<strong>Groq:</strong> Get free API key at <a href="https://console.groq.com" target="_blank">console.groq.com</a> (Fastest)',
+                'openai': '<strong>OpenAI:</strong> Get API key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> (High Quality)',
+                'anthropic': '<strong>Anthropic:</strong> Get API key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> (Claude)',
+                'mistral': '<strong>Mistral AI:</strong> Get API key at <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a> (European)',
+                'together': '<strong>Together AI:</strong> Get API key at <a href="https://api.together.xyz" target="_blank">api.together.xyz</a> (Open Source)',
+                'openrouter': '<strong>OpenRouter:</strong> Get API key at <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai</a> (Multi-Model)'
+            };
+            
+            providerInfoElement.innerHTML = providerInfoMap[provider] || '<strong>Provider:</strong> Check documentation for API key';
         }
 
         // Prompt Analysis
@@ -1044,18 +1161,37 @@
             }
         }
 
+        function formatFeedback(feedback) {
+            if (!feedback) return '';
+            
+            // If it's already formatted with bullet points, return as is
+            if (typeof feedback === 'string' && feedback.includes('•')) {
+                return feedback.replace(/\n/g, '<br>');
+            }
+            
+            // If it's an array, format with bullet points
+            if (Array.isArray(feedback)) {
+                return feedback.map(item => `• ${item}`).join('<br>');
+            }
+            
+            // If it's a plain string, return formatted
+            return feedback.replace(/\n/g, '<br>');
+        }
+
         function displayResults(data) {
-            // Update scores
+            // Update scores with new comprehensive system
             document.getElementById('overallScore').textContent = data.scores.overall || '--';
             document.getElementById('clarityScore').textContent = data.scores.clarity || '--';
-            document.getElementById('specificityScore').textContent = data.scores.specificity || '--';
             document.getElementById('contextScore').textContent = data.scores.context || '--';
             document.getElementById('structureScore').textContent = data.scores.structure || '--';
-            document.getElementById('effectivenessScore').textContent = data.scores.effectiveness || '--';
+            document.getElementById('roleScore').textContent = data.scores.role || '--';
+            document.getElementById('constraintsScore').textContent = data.scores.constraints || '--';
+            document.getElementById('advancedScore').textContent = data.scores.advanced || '--';
 
-            // Update feedback
-            document.getElementById('strengths').textContent = data.feedback.strengths || 'No strengths identified.';
-            document.getElementById('weaknesses').textContent = data.feedback.weaknesses || 'No weaknesses identified.';
+            // Update feedback sections
+            document.getElementById('strengths').innerHTML = formatFeedback(data.feedback.strengths) || 'No strengths identified.';
+            document.getElementById('weaknesses').innerHTML = formatFeedback(data.feedback.weaknesses) || 'No weaknesses identified.';
+            document.getElementById('improvements').innerHTML = formatFeedback(data.feedback.improvements) || 'No improvements suggested.';
             document.getElementById('improvedPrompt').value = data.improved_prompt || 'No improved version available.';
 
             // Show results
@@ -1064,7 +1200,7 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            updateModels();
+            loadProviders(); // Load providers and models dynamically
             startDecryptionAnimation(); // Start animation on initial load
             
             // Add provider change listener
