@@ -16,10 +16,11 @@ wheels/
 .vscode/tasks.json
 .env
 # Django
-# evrything with start . expect .gitignore and .env
+# evrything with start . expect .gitignore, .env, and uv.lock
 .*
 .marscode
 
 !.gitignore
+!uv.lock
 local_settings.py
 db.sqlite3
