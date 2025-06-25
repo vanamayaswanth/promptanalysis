@@ -8,3 +8,12 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Django
+# evrything with start . expect .gitignore and .env
+.*
+.marscode/
+
+!.gitignore
+local_settings.py
+db.sqlite3
